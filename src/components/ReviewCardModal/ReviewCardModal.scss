@@ -1,0 +1,24 @@
+.modal-overlay {
+  // z-index: map-get($z-indexes, 'modal');
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+
+  &::before {
+    content: '';
+    background-color: lighten(black, 30);
+    opacity: 0.9;
+    flex: 1 1 0;
+  }
+}
+
+.modal {
+  position: absolute;
+  top: calc(50% + 50px);
+  transform: translateY(-50%);
+  max-width: 680px;
+  border-radius: 3px;
+}

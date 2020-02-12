@@ -1,24 +1,35 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import ReviewCard, { ReviewCardProps } from './components/ReviewCard/ReviewCard';
+import { isNil } from 'lodash';
 
-const App = () => {
+function App() {
+  const [data, setData] = React.useState([]);
+  React.useEffect(() => {
+    fetch('http://localhost:3004/reviews', {
+      headers : { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+       }
+    })
+    .then((response) => {
+      return response.json();
+    })
+    .then((myJson) => {
+      setData(myJson)
+    });
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='app-container'>
+      <div className='app-header'>Reviews</div>
+      <div className='review-list'>
+        {data.map((review: ReviewCardProps) => {
+          return (
+            <ReviewCard key={review.id} {...review} />
+          )
+        })}
+      </div>
     </div>
   );
 }

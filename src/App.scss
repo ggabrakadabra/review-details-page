@@ -1,0 +1,20 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+
+
+  .app-header {
+    height: 30px;
+    background-color: blue;
+    color: white;
+    display: flex;
+    align-items: center;
+    z-index: 1;
+  }
+
+  .review-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;  
+  }
+}

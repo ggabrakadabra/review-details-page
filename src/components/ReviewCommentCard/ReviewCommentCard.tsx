@@ -35,7 +35,7 @@ export default function ReviewCommentCard(props: ReviewCommentCardProps) {
   }
 
   return (
-    <div className='review-comment-card-container'>
+    <div className='review-comment-card-container' data-testid='review-comment-card'>
       {!isEditing ? (
         <>
           <div className='description'>

@@ -6,6 +6,7 @@ import './ReviewDetailsCard.scss';
 import CommentForm, { CommentFormProps } from '../CommentForm/CommentForm';
 import ReviewCard, { ReviewCardProps } from '../ReviewCard/ReviewCard';
 import classnames from 'classnames';
+import { addOrEditComment } from '../../api/fetch';
 
 export interface CommentProps {
   username: string;
@@ -41,33 +42,19 @@ export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
   });
   const [showCommentForm, setShowCommentForm] = React.useState<boolean>(false);
   const [reviewHasComment, setReviewHasComment] = React.useState<boolean>(!isNil(comment));
-
-  async function addOrEditComment(username: string, description: string) {
-    const editComment = {
-      date: moment().format('dddd, MMMM DD, h:mm a z').toString(),
-      username,
-      description
-    }
-    const body = !isEmpty(username) ? editComment : reviewResponse
-    await fetch(`http://localhost:3004/reviews/${id}`, {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'PATCH',
-      body: JSON.stringify({...props, comment: body})
-    })
-    .then((response) => {
-      return response.json();
-    })
-    .then((myJson) => {
-      setReviewResponse(myJson.comment);
-    });
+  
+  async function updateReviewComment(
+    username: string, 
+    description: string
+    ) {
+      const updatedReview = await addOrEditComment(username, description, reviewResponse, props);
+      setReviewResponse(updatedReview.comment);
   }
 
   const commentCTA = (username: string, description: string, isEditing: boolean) => {
     if (showCommentForm) {
       setReviewHasComment(true);
-      addOrEditComment(username, description);
+      updateReviewComment(username, description);
     }
     setShowCommentForm(isEditing);
   }
@@ -89,7 +76,7 @@ export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
 
   const reviewCommentCardProps: ReviewCommentCardProps = {
     ...reviewResponse, 
-    editComment: (username: string, description: string) => addOrEditComment(username,description)
+    editComment: (username: string, description: string) => updateReviewComment(username,description)
   }
 
   const reviewDetailsContainerClasses = classnames('review-details-container', {

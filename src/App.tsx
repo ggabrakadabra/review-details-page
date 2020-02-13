@@ -1,24 +1,19 @@
 import React from 'react';
 import './App.scss';
 import ReviewCardModal, { ReviewCardModalProps } from './components/ReviewCardModal/ReviewCardModal';
+import { getReviews } from './api/fetch';
 
 function App() {
   const [data, setData] = React.useState([]);
 
+  const setReviews = React.useCallback(async () => {
+    const reviews = await getReviews()
+    setData(reviews)
+  }, [getReviews, setData])
+  
   React.useEffect(() => {
-    fetch('http://localhost:3004/reviews', {
-      headers : { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-       }
-    })
-    .then((response) => {
-      return response.json();
-    })
-    .then((myJson) => {
-      setData(myJson)
-    });
-  }, []);
+    setReviews();
+  }, [setReviews]);
 
   return (
     <div className='app-container' data-testid='app-container'>

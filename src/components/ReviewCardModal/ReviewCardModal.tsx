@@ -59,6 +59,7 @@ export default function ReviewCardModal(props: ReviewCardModalProps) {
     return (
       <div 
         className='review-card-container'
+        data-testid='review-card-container'
         role='button'
         onClick={() => setShowDetailsView(!showDetailsView)}
       >

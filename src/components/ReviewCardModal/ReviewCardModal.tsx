@@ -2,6 +2,7 @@ import * as React from 'react';
 import ReviewDetailsCard, { ReviewDetailsCardProps, CommentProps } from '../ReviewCard/ReviewDetailsCard/ReviewDetailsCard';
 import ReactModal from 'react-modal';
 import './ReviewCardModal.scss'
+import ReviewCard from '../ReviewCard/ReviewCard';
 
 export interface ReviewCardModalProps {
   id: string;
@@ -11,11 +12,11 @@ export interface ReviewCardModalProps {
   rating: number;
   content: string;
   comment: CommentProps;
-  showDetailsView: boolean;
-  onRequestClose: (showDetailsView: boolean) => void
 }
 
 export default function ReviewCardModal(props: ReviewCardModalProps) {
+  const [showDetailsView, setShowDetailsView] = React.useState<boolean>(false);
+
   const {
     author, 
     place,
@@ -23,8 +24,6 @@ export default function ReviewCardModal(props: ReviewCardModalProps) {
     rating,
     content,
     id,
-    showDetailsView,
-    onRequestClose,
     comment
   } = props; 
 
@@ -37,21 +36,36 @@ export default function ReviewCardModal(props: ReviewCardModalProps) {
     comment,
     id
   }
+
   const defaultReactModalProps = {
     isOpen: true,
     shouldCloseOnOverlayClick: true,
     shouldCloseOnEsc: true,
-    onRequestClose: () => onRequestClose(!showDetailsView),
+    onRequestClose: () => setShowDetailsView(!showDetailsView),
     className: 'modal',
     overlayClassName: 'modal-overlay',
     ariaHideApp: false
   }
 
-  return (
-    <ReactModal {...defaultReactModalProps} > 
-      <div className='modal-review-card-container'>
-        <ReviewDetailsCard {...reviewDetailsProps} />
+  const reviewCardModal = () => {
+    return (
+      <ReactModal {...defaultReactModalProps} > 
+          <ReviewDetailsCard {...reviewDetailsProps} />
+      </ReactModal>
+    );
+  }
+
+  const reviewCard = () => {
+    return (
+      <div 
+        className='review-card-container'
+        role='button'
+        onClick={() => setShowDetailsView(!showDetailsView)}
+      >
+        <ReviewCard {...props}/>
       </div>
-    </ReactModal>
-  )
+    )
+  }
+
+  return showDetailsView ? reviewCardModal() : reviewCard();
 }

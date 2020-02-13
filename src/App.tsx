@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.scss';
-import ReviewCard, { ReviewCardProps } from './components/ReviewCard/ReviewCard';
+// import ReviewCard, { ReviewCardProps } from './components/ReviewCard/ReviewCard';
+import ReviewCardModal, { ReviewCardModalProps } from './components/ReviewCardModal/ReviewCardModal';
 
 function App() {
   const [data, setData] = React.useState([]);
@@ -34,7 +35,7 @@ function App() {
             published_at
           } = review;
 
-          const reviewProps: ReviewCardProps = {
+          const reviewProps: ReviewCardModalProps = {
             id,
             author,
             place,
@@ -44,7 +45,7 @@ function App() {
             publishedAt: published_at
           }
           return (
-            <ReviewCard key={id} {...reviewProps} />
+            <ReviewCardModal key={id} {...reviewProps} />
           )
         })}
       </div>

@@ -124,7 +124,7 @@ export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
     })
   }
   return (
-    <div className=''>
+    <div className='review-details-container'>
       {ReviewCard()}
       {reviewHasComment ? <ReviewCommentCard {...foo}/> : null}
     </div>

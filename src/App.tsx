@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.scss';
 import ReviewCard, { ReviewCardProps } from './components/ReviewCard/ReviewCard';
-import { isNil } from 'lodash';
 
 function App() {
   const [data, setData] = React.useState([]);
@@ -24,9 +23,28 @@ function App() {
     <div className='app-container'>
       <div className='app-header'>Reviews</div>
       <div className='review-list'>
-        {data.map((review: ReviewCardProps) => {
+        {data.map(review => {
+          const {            
+            id,
+            author,
+            place,
+            rating,
+            content,
+            comment, 
+            published_at
+          } = review;
+
+          const reviewProps: ReviewCardProps = {
+            id,
+            author,
+            place,
+            rating,
+            content,
+            comment,
+            publishedAt: published_at
+          }
           return (
-            <ReviewCard key={review.id} {...review} />
+            <ReviewCard key={id} {...reviewProps} />
           )
         })}
       </div>

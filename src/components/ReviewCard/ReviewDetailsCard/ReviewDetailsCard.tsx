@@ -38,19 +38,20 @@ export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
   });
   const [showCommentForm, setShowCommentForm] = React.useState<boolean>(false);
   const [reviewHasComment, setReviewHasComment] = React.useState<boolean>(!isNil(comment));
-
-  async function addComment() {
+  async function addOrEditComment(editComment?: CommentProps) {
+    const body = editComment ? editComment : reviewResponse
     await fetch(`http://localhost:3004/reviews/${id}`, {
       headers: {
         'Content-Type': 'application/json'
       },
       method: 'PATCH',
-      body: JSON.stringify({...props, comment: reviewResponse})
+      body: JSON.stringify({...props, comment: body})
     })
     .then((response) => {
       return response.json();
     })
     .then((myJson) => {
+      console.log(myJson.comment)
       setReviewResponse(myJson.comment);
     });
   }
@@ -58,11 +59,11 @@ export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
   const commentCTA = () => {
     if (showCommentForm) {
       setReviewHasComment(true)
-      addComment();
+      addOrEditComment();
     }
     setShowCommentForm(!showCommentForm);
   }
-
+  
   const commentForm = () => {
     return showCommentForm ? (
       <div>
@@ -83,7 +84,6 @@ export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
       </div>
     ) : null;
   }
-  
   const ReviewCard = () => {
     return (
       <div className='review-card'>
@@ -115,11 +115,18 @@ export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
       </div>
     )
   }
-
+  const foo = {
+    ...reviewResponse, 
+    editComment: (username: string, description: string) => addOrEditComment({
+      date: reviewResponse.date,
+      username,
+      description
+    })
+  }
   return (
     <div className=''>
       {ReviewCard()}
-      {reviewHasComment ? <ReviewCommentCard {...reviewResponse}/> : null}
+      {reviewHasComment ? <ReviewCommentCard {...foo}/> : null}
     </div>
   );
 }

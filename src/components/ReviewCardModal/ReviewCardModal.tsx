@@ -50,12 +50,6 @@ export default function ReviewCardModal(props: ReviewCardModalProps) {
   return (
     <ReactModal {...defaultReactModalProps} > 
       <div className='modal-review-card-container'>
-        {/* <div
-          role='button'
-          onClick={() => onRequestClose(!showDetailsView)} 
-        >
-          x
-        </div> */}
         <ReviewDetailsCard {...reviewDetailsProps} />
       </div>
     </ReactModal>

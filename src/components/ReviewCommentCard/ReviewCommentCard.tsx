@@ -1,25 +1,54 @@
 import * as React from 'react';
 import './ReviewCommentCard.scss';
 import { CommentProps } from '../ReviewCard/ReviewDetailsCard/ReviewDetailsCard';
+import CommentForm, { CommentFormProps } from '../CommentForm/CommentForm';
+import { isEmpty } from 'lodash';
 
-export default function ReviewCommentCard(props: CommentProps) {
+export interface ReviewCommentCardProps extends CommentProps {
+  editComment: (username: string, description: string, showCommentForm: boolean) => void;
+}
+
+export default function ReviewCommentCard(props: ReviewCommentCardProps) {
   const {
     username,
     description,
-    date
+    date,
+    editComment
   } = props; 
+
+  const [isEditing, setIsEditing] = React.useState(false);
+  const foo = (username: string, description: string, showCommentForm: boolean) => {
+    setIsEditing(showCommentForm)
+    editComment(username, description, showCommentForm)
+  }
+  const commentFormProps: CommentFormProps = {
+    username,
+    description,
+    onChange: foo,
+    buttonDisabled: (isEmpty(username) || isEmpty(description)),
+    buttonText: 'edit',
+  }
 
   return (
     <div className='review-comment-card-container'>
-      <div>
-        {username}
-      </div>
-      <div>
-        {description}
-      </div>
-      <div>
-        {date}
-      </div>
+      {!isEditing ? (
+        <>
+          <div>
+            {username}
+          </div>
+          <div>
+            {description}
+          </div>
+          <div>
+            {date}
+          </div>
+        </>
+      ) : <CommentForm {...commentFormProps} />}
+      {!isEditing ? (<button
+        onClick={() => editComment && setIsEditing(!isEditing)}
+      >
+        edit comment
+      </button>) : null}
     </div>
   )
 }

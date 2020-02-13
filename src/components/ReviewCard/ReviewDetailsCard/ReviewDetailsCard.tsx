@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ReviewCommentCard from '../../ReviewCommentCard/ReviewCommentCard';
+import ReviewCommentCard, { ReviewCommentCardProps } from '../../ReviewCommentCard/ReviewCommentCard';
 import moment from 'moment';
 import { isNil, isEmpty } from 'lodash';
 import './ReviewDetailsCard.scss';
@@ -84,6 +84,7 @@ export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
       </div>
     ) : null;
   }
+  
   const ReviewCard = () => {
     return (
       <div className='review-card'>
@@ -115,7 +116,7 @@ export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
       </div>
     )
   }
-  const foo = {
+  const reviewCommentCardProps: ReviewCommentCardProps = {
     ...reviewResponse, 
     editComment: (username: string, description: string) => addOrEditComment({
       date: reviewResponse.date,
@@ -126,7 +127,7 @@ export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
   return (
     <div className='review-details-container'>
       {ReviewCard()}
-      {reviewHasComment ? <ReviewCommentCard {...foo}/> : null}
+      {reviewHasComment ? <ReviewCommentCard {...reviewCommentCardProps}/> : null}
     </div>
   );
 }

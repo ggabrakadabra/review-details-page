@@ -17,14 +17,18 @@ export default function ReviewCommentCard(props: ReviewCommentCardProps) {
   } = props; 
 
   const [isEditing, setIsEditing] = React.useState(false);
-  const foo = (username: string, description: string, showCommentForm: boolean) => {
-    setIsEditing(showCommentForm)
-    editComment(username, description, showCommentForm)
+  const onChange = (username: string, description: string, showCommentForm: boolean) => {
+    if (isEmpty(username) || isEmpty(description)) {
+      setIsEditing(showCommentForm);
+    } else {
+      setIsEditing(showCommentForm);
+      editComment(username, description, showCommentForm);
+    }
   }
   const commentFormProps: CommentFormProps = {
     username,
     description,
-    onChange: foo,
+    onChange: onChange,
     buttonDisabled: (isEmpty(username) || isEmpty(description)),
     buttonText: 'edit',
   }
@@ -50,5 +54,5 @@ export default function ReviewCommentCard(props: ReviewCommentCardProps) {
         edit comment
       </button>) : null}
     </div>
-  )
+  );
 }

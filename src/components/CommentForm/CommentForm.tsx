@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { isEmpty } from 'lodash';
 
 export interface CommentFormProps {
   onChange: (username: string, description: string, showCommentForm: boolean) => void;
@@ -16,11 +17,11 @@ export default function CommentForm(props: CommentFormProps) {
     buttonText,
   } = props; 
   
-  const [isEditing, setIsEditing] = React.useState(false);
   const [comment, setComment] = React.useState({
     commentUsername: '',
     commentDescription:''
-  })
+  });
+
   const {
     commentUsername,
     commentDescription
@@ -46,7 +47,7 @@ export default function CommentForm(props: CommentFormProps) {
         >
         </input>
       </>
-    )
+    );
   }
 
   return (
@@ -54,13 +55,20 @@ export default function CommentForm(props: CommentFormProps) {
       {form()}
       <button
         className='submit-comment-button'
+        disabled={isEmpty(commentUsername) || isEmpty(commentDescription)}
         onClick={() => {
-          console.log('in onclick for submit form')
-          onChange(commentUsername, commentDescription, isEditing);
-          setIsEditing(!isEditing);
+          onChange(commentUsername, commentDescription, false);
         }}
       >
         {buttonText}
+      </button>
+      <button
+        className='submit-comment-button'
+        onClick={() => {
+          onChange('', '', false);
+        }}
+      >
+        cancel
       </button>
     </div>
   )

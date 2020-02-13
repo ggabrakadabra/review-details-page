@@ -3,6 +3,7 @@ import './ReviewCommentCard.scss';
 import { CommentProps } from '../ReviewCard/ReviewDetailsCard/ReviewDetailsCard';
 import CommentForm, { CommentFormProps } from '../CommentForm/CommentForm';
 import { isEmpty } from 'lodash';
+import moment from 'moment';
 
 export interface ReviewCommentCardProps extends CommentProps {
   editComment: (username: string, description: string, showCommentForm: boolean) => void;
@@ -37,22 +38,25 @@ export default function ReviewCommentCard(props: ReviewCommentCardProps) {
     <div className='review-comment-card-container'>
       {!isEditing ? (
         <>
-          <div>
-            {username}
-          </div>
-          <div>
+          <div className='description'>
             {description}
+            {!isEditing ? (
+            <button
+              onClick={() => editComment && setIsEditing(!isEditing)}
+            >
+              edit comment
+            </button>) : null}
           </div>
-          <div>
-            {date}
+          <div className='review-card-footer'>
+            <div className='author'>
+              {username}
+            </div>
+            <div className='date-published'>
+              {moment(date).format('MM/DD/YYYY')}
+            </div>
           </div>
         </>
       ) : <CommentForm {...commentFormProps} />}
-      {!isEditing ? (<button
-        onClick={() => editComment && setIsEditing(!isEditing)}
-      >
-        edit comment
-      </button>) : null}
     </div>
   );
 }

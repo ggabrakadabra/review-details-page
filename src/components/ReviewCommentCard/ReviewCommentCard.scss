@@ -3,4 +3,26 @@
   padding: 10px;
   margin: 5px;
   background-color: white;
+
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+
+
+
+  .review-card-footer {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .description {
+    font-size: x-large;
+    font-weight: 200;
+    justify-content: space-between;
+    display: flex;
+  }
+
+  .date-published {
+    font-weight: 200;
+  }
 }

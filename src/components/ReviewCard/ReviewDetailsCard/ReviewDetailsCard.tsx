@@ -3,6 +3,7 @@ import ReviewCommentCard, { ReviewCommentCardProps } from '../../ReviewCommentCa
 import moment from 'moment';
 import { isNil, isEmpty } from 'lodash';
 import './ReviewDetailsCard.scss';
+import CommentForm, { CommentFormProps } from '../../CommentForm/CommentForm';
 
 export interface CommentProps {
   username: string;
@@ -38,8 +39,14 @@ export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
   });
   const [showCommentForm, setShowCommentForm] = React.useState<boolean>(false);
   const [reviewHasComment, setReviewHasComment] = React.useState<boolean>(!isNil(comment));
-  async function addOrEditComment(editComment?: CommentProps) {
-    const body = editComment ? editComment : reviewResponse
+
+  async function addOrEditComment(username: string, description: string) {
+    const editComment = {
+      date: reviewResponse.date,
+      username,
+      description
+    }
+    const body = !isEmpty(username) ? editComment : reviewResponse
     await fetch(`http://localhost:3004/reviews/${id}`, {
       headers: {
         'Content-Type': 'application/json'
@@ -56,12 +63,13 @@ export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
     });
   }
 
-  const commentCTA = () => {
+  const commentCTA = (username: string, description: string, isEditing: boolean) => {
+    console.log('HERE')
     if (showCommentForm) {
       setReviewHasComment(true)
-      addOrEditComment();
+      addOrEditComment(username, description);
     }
-    setShowCommentForm(!showCommentForm);
+    setShowCommentForm(isEditing);
   }
   
   const commentForm = () => {
@@ -84,7 +92,15 @@ export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
       </div>
     ) : null;
   }
-  
+
+  const commentFormProps: CommentFormProps = {
+    onChange: (username: string, description: string, isEditing: boolean) => commentCTA(username, description, isEditing),
+    username: reviewResponse.username,
+    description: reviewResponse.description,
+    buttonText: showCommentForm ? 'submit Comment' : 'add comment',
+    buttonDisabled: showCommentForm && (isEmpty(reviewResponse.username) || isEmpty(reviewResponse.description))
+  }
+
   const ReviewCard = () => {
     return (
       <div className='review-card'>
@@ -103,11 +119,11 @@ export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
         <div>
           {content}
         </div>
-        {!reviewHasComment ? commentForm() : null}
-        {!reviewHasComment ? (
+        {!reviewHasComment && showCommentForm ? <CommentForm {...commentFormProps} /> : null}
+        {!reviewHasComment && !showCommentForm ? (
           <button
             className='submit-comment-button'
-            onClick={() => commentCTA()}
+            onClick={() => commentCTA('', '', true)}
             disabled={showCommentForm && (isEmpty(reviewResponse.username) || isEmpty(reviewResponse.description))}
           >
             {showCommentForm ? 'submit Comment' : 'add comment'}
@@ -116,14 +132,12 @@ export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
       </div>
     )
   }
+
   const reviewCommentCardProps: ReviewCommentCardProps = {
     ...reviewResponse, 
-    editComment: (username: string, description: string) => addOrEditComment({
-      date: reviewResponse.date,
-      username,
-      description
-    })
+    editComment: (username: string, description: string) => addOrEditComment(username,description)
   }
+
   return (
     <div className='review-details-container'>
       {ReviewCard()}

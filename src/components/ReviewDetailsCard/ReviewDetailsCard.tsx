@@ -44,7 +44,7 @@ export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
 
   async function addOrEditComment(username: string, description: string) {
     const editComment = {
-      date: reviewResponse.date,
+      date: moment().format('dddd, MMMM DD, h:mm a z').toString(),
       username,
       description
     }

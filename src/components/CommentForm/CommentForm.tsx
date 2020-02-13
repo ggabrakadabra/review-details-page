@@ -18,8 +18,8 @@ export default function CommentForm(props: CommentFormProps) {
   } = props; 
   
   const [comment, setComment] = React.useState({
-    commentUsername: '',
-    commentDescription:''
+    commentUsername: username || '',
+    commentDescription: description || ''
   });
 
   const {

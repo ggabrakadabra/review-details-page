@@ -1,9 +1,11 @@
 import * as React from 'react';
-import ReviewCommentCard, { ReviewCommentCardProps } from '../../ReviewCommentCard/ReviewCommentCard';
+import ReviewCommentCard, { ReviewCommentCardProps } from '../ReviewCommentCard/ReviewCommentCard';
 import moment from 'moment';
 import { isNil, isEmpty } from 'lodash';
 import './ReviewDetailsCard.scss';
-import CommentForm, { CommentFormProps } from '../../CommentForm/CommentForm';
+import CommentForm, { CommentFormProps } from '../CommentForm/CommentForm';
+import ReviewCard, { ReviewCardProps } from '../ReviewCard/ReviewCard';
+import classnames from 'classnames';
 
 export interface CommentProps {
   username: string;
@@ -58,39 +60,17 @@ export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
       return response.json();
     })
     .then((myJson) => {
-      console.log(myJson.comment)
+      console.log(myJson.comment);
       setReviewResponse(myJson.comment);
     });
   }
 
   const commentCTA = (username: string, description: string, isEditing: boolean) => {
-    console.log('HERE')
     if (showCommentForm) {
-      setReviewHasComment(true)
+      setReviewHasComment(true);
       addOrEditComment(username, description);
     }
     setShowCommentForm(isEditing);
-  }
-  
-  const commentForm = () => {
-    return showCommentForm ? (
-      <div>
-        <input
-          placeholder='username'
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>  {
-            setReviewResponse({...reviewResponse, username: event.target.value})
-          }}
-        >
-        </input>
-        <input
-          placeholder='comment'
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>  {
-            setReviewResponse({...reviewResponse, description: event.target.value})
-          }}
-        >
-        </input>
-      </div>
-    ) : null;
   }
 
   const commentFormProps: CommentFormProps = {
@@ -100,25 +80,26 @@ export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
     buttonText: showCommentForm ? 'submit Comment' : 'add comment',
     buttonDisabled: showCommentForm && (isEmpty(reviewResponse.username) || isEmpty(reviewResponse.description))
   }
+  const reviewCardProps: ReviewCardProps = {
+    author,
+    place,
+    publishedAt,
+    rating,
+    content
+  }
 
-  const ReviewCard = () => {
-    return (
-      <div className='review-card'>
-        <div>
-          {place}
-        </div>
-        <div>
-          {publishedAt}
-        </div>
-        <div>
-          {author}
-        </div>
-        <div>
-          {rating}
-        </div>
-        <div>
-          {content}
-        </div>
+  const reviewCommentCardProps: ReviewCommentCardProps = {
+    ...reviewResponse, 
+    editComment: (username: string, description: string) => addOrEditComment(username,description)
+  }
+
+  const reviewDetailsContainerClasses = classnames('review-details-container', {
+    'no-comment': !reviewHasComment
+  })
+
+  return (
+    <div className={reviewDetailsContainerClasses}>
+        <ReviewCard {...reviewCardProps} />
         {!reviewHasComment && showCommentForm ? <CommentForm {...commentFormProps} /> : null}
         {!reviewHasComment && !showCommentForm ? (
           <button
@@ -129,18 +110,6 @@ export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
             {showCommentForm ? 'submit Comment' : 'add comment'}
           </button>
         ) : null}
-      </div>
-    )
-  }
-
-  const reviewCommentCardProps: ReviewCommentCardProps = {
-    ...reviewResponse, 
-    editComment: (username: string, description: string) => addOrEditComment(username,description)
-  }
-
-  return (
-    <div className='review-details-container'>
-      {ReviewCard()}
       {reviewHasComment ? <ReviewCommentCard {...reviewCommentCardProps}/> : null}
     </div>
   );

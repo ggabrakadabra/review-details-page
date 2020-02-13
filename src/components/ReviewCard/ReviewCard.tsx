@@ -21,7 +21,7 @@ export default function ReviewCard(props: ReviewCardProps) {
   } = props; 
 
   return (
-    <>
+    <div className='review-card'>
       <div className='place'>
         {place}
       </div>
@@ -39,6 +39,6 @@ export default function ReviewCard(props: ReviewCardProps) {
           {moment(publishedAt).format('MM/DD/YYYY')}
         </div>
       </div>
-    </>
+    </div>
   )
 }

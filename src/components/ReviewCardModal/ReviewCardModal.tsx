@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ReviewDetailsCard, { ReviewDetailsCardProps, CommentProps } from '../ReviewCard/ReviewDetailsCard/ReviewDetailsCard';
+import ReviewDetailsCard, { ReviewDetailsCardProps, CommentProps } from '../ReviewDetailsCard/ReviewDetailsCard';
 import ReactModal from 'react-modal';
 import './ReviewCardModal.scss'
 import ReviewCard from '../ReviewCard/ReviewCard';

@@ -1,8 +1,21 @@
+# About
+## Objective
+Design and implement an application that lists reviews and allows a user to select a review to see more details. Review data will be provided in the form of a reviews.json file.
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-This Project uses the [json server package](https://github.com/typicode/json-server) as an api
+This Project uses the [json server package](https://github.com/typicode/json-server) as an api to make data lookup and storage easy
+
+## How to Use
+run both `yarn start` and `json-server --watch db.json --port 3004`
+on page load there will be a list of reviews
+you can click on any review and add / view / edit a comment
+
+## What I would add if I had more time
+I would like to get 100% test coverage
+Finish styling to match the mockup
 
 ## Available Scripts
-
 In the project directory, you can run:
 
 ### `yarn start`

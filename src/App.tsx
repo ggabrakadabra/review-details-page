@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.scss';
-// import ReviewCard, { ReviewCardProps } from './components/ReviewCard/ReviewCard';
 import ReviewCardModal, { ReviewCardModalProps } from './components/ReviewCardModal/ReviewCardModal';
 
 function App() {

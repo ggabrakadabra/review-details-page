@@ -1,5 +1,4 @@
 .review-comment-card-container {
-  border: 1px solid black;
   padding: 10px;
   margin: 5px;
   background-color: white;
@@ -13,6 +12,7 @@
   .review-card-footer {
     display: flex;
     justify-content: space-between;
+    font-size: small;
   }
 
   .description {

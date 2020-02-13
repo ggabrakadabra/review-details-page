@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './ReviewCommentCard.scss';
-import { CommentProps } from '../ReviewCard/ReviewDetailsCard/ReviewDetailsCard';
+import { CommentProps } from '../ReviewDetailsCard/ReviewDetailsCard';
 import CommentForm, { CommentFormProps } from '../CommentForm/CommentForm';
 import { isEmpty } from 'lodash';
 import moment from 'moment';

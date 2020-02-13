@@ -1,23 +1,25 @@
-.review-card-container {
-  border: 1px solid black;
-  padding: 10px;
-  margin: 5px;
-  flex-basis: 30%;
-  justify-content: space-evenly;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-
 .review-card-footer {
   display: flex;
   justify-content: space-between;
-}
+  font-size: small;
 
-  .place {
-    font-weight: bold;
-  }
-
-  .rating {
-    color: gold;
+  .date-published {
+    font-weight: 200;
   }
 }
+
+  .review-card {
+    padding: 10px;
+    
+    .description {
+      padding: 25px 0px;
+    }
+
+    .place {
+      font-weight: bold;
+    }
+  
+    .rating {
+      color: gold;
+    }
+  }

@@ -1,5 +1,4 @@
 .modal-overlay {
-  // z-index: map-get($z-indexes, 'modal');
   position: fixed;
   top: 0;
   width: 100%;
@@ -21,4 +20,13 @@
   transform: translateY(-50%);
   max-width: 680px;
   border-radius: 3px;
+}
+
+.review-card-container {
+  padding: 10px;
+  margin: 5px;
+  flex-basis: 30%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
 }

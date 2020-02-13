@@ -4,6 +4,7 @@ import ReviewCardModal, { ReviewCardModalProps } from './components/ReviewCardMo
 
 function App() {
   const [data, setData] = React.useState([]);
+
   React.useEffect(() => {
     fetch('http://localhost:3004/reviews', {
       headers : { 
@@ -20,11 +21,11 @@ function App() {
   }, []);
 
   return (
-    <div className='app-container'>
+    <div className='app-container' data-testid='app-container'>
       <div className='app-header'>Reviews</div>
-      <div className='review-list'>
+      <div className='review-list' data-testid='review-list'>
         {data.map(review => {
-          const {            
+          const {
             id,
             author,
             place,
@@ -43,6 +44,7 @@ function App() {
             comment,
             publishedAt: published_at
           }
+          
           return (
             <ReviewCardModal key={id} {...reviewProps} />
           )

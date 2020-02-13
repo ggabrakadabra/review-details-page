@@ -60,7 +60,6 @@ export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
       return response.json();
     })
     .then((myJson) => {
-      console.log(myJson.comment);
       setReviewResponse(myJson.comment);
     });
   }

@@ -21,12 +21,14 @@ export default function ReviewCard(props: ReviewCardProps) {
   } = props; 
 
   return (
-    <div className='review-card'>
+    <div 
+      data-testid='review-card'
+      className='review-card'>
       <div className='place'>
         {place}
       </div>
       <div className='rating'>
-        {range(rating).map((rating) => <>	&#x2605;</>)}
+        {range(rating).map(() => <>	&#x2605;</>)}
       </div>
       <div className='description'>
         {content}
@@ -36,7 +38,7 @@ export default function ReviewCard(props: ReviewCardProps) {
           {author}
         </div>
         <div className='date-published'>
-          {moment(publishedAt).format('MM/DD/YYYY')}
+          {moment(new Date(publishedAt)).format('MM/DD/YYYY')}
         </div>
       </div>
     </div>

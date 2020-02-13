@@ -52,7 +52,7 @@ export default function ReviewCommentCard(props: ReviewCommentCardProps) {
               {username}
             </div>
             <div className='date-published'>
-              {moment(date).format('MM/DD/YYYY')}
+              {moment(new Date(date)).format('MM/DD/YYYY')}
             </div>
           </div>
         </>

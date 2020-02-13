@@ -1,9 +1,10 @@
 .review-details-container {
+  padding: 10px;
 
   &.no-comment {
     background-color: white;
   }
-  
+
   .review-card {
     margin: 5px;
     background-color: white;

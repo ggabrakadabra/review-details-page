@@ -62,7 +62,7 @@ export default function ReviewCardModal(props: ReviewCardModalProps) {
         role='button'
         onClick={() => setShowDetailsView(!showDetailsView)}
       >
-        <ReviewCard {...props}/>
+        <ReviewCard key={id} {...props}/>
       </div>
     )
   }

@@ -31,6 +31,7 @@ export default function CommentForm(props: CommentFormProps) {
     return (
       <>
         <input
+          data-testid='username'
           placeholder='username'
           onChange={(event: React.ChangeEvent<HTMLInputElement>) =>  {
             setComment({...comment, commentUsername: event.target.value})
@@ -39,6 +40,7 @@ export default function CommentForm(props: CommentFormProps) {
         >
         </input>
         <input
+          data-testid='description'
           placeholder='description'
           onChange={(event: React.ChangeEvent<HTMLInputElement>) =>  {
             setComment({...comment, commentDescription: event.target.value})
@@ -54,6 +56,7 @@ export default function CommentForm(props: CommentFormProps) {
     <div>
       {form()}
       <button
+        data-testid='submit-comment-button'
         className='submit-comment-button'
         disabled={isEmpty(commentUsername) || isEmpty(commentDescription)}
         onClick={() => {
@@ -63,6 +66,7 @@ export default function CommentForm(props: CommentFormProps) {
         {buttonText}
       </button>
       <button
+        data-testid='button'
         className='submit-comment-button'
         onClick={() => {
           onChange('', '', false);

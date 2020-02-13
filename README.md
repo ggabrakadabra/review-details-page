@@ -13,7 +13,7 @@ you can click on any review and add / view / edit a comment
 
 ## What I would add if I had more time
 I would like to get 100% test coverage
-Finish styling to match the mockup
+The styling does not exactly match the mocks and ideally they would look the same. 
 
 ## Available Scripts
 In the project directory, you can run:

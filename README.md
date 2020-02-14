@@ -1,8 +1,10 @@
 # About
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This Project uses the [json server package](https://github.com/typicode/json-server) as an api to make data lookup and storage easy
+
 ## Objective
 Design and implement an application that lists reviews and allows a user to select a review to see more details. Review data will be provided in the form of a reviews.json file.
 
-### Review Detail Page Specs:
 - A view with a list of reviews
   - Review rating is visible
   - Review published_at is visible
@@ -12,9 +14,6 @@ Design and implement an application that lists reviews and allows a user to sele
   - A review can only have one response
   - A response can be edited
   - A response should be shown with the rest of the review details
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-This Project uses the [json server package](https://github.com/typicode/json-server) as an api to make data lookup and storage easy
 
 ## How to Use
 run `nf start` to start both the web and api servers

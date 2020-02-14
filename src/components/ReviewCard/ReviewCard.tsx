@@ -27,8 +27,8 @@ export default function ReviewCard(props: ReviewCardProps) {
       <div className='place'>
         {place}
       </div>
-      <div className='rating'>
-        {range(rating).map(() => <>	&#x2605;</>)}
+      <div className='rating' data-testid='rating'>
+        {range(rating).map(() => <React.Fragment key={Math.random()}>	&#x2605;</React.Fragment>)}
       </div>
       <div className='description'>
         {content}
@@ -37,7 +37,7 @@ export default function ReviewCard(props: ReviewCardProps) {
         <div className='author'>
           {author}
         </div>
-        <div className='date-published'>
+        <div className='date-published' data-testid='date-published'>
           {moment(new Date(publishedAt)).format('MM/DD/YYYY')}
         </div>
       </div>

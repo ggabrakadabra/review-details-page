@@ -49,7 +49,7 @@ export default function ReviewCardModal(props: ReviewCardModalProps) {
 
   const reviewCardModal = () => {
     return (
-      <ReactModal {...defaultReactModalProps} > 
+      <ReactModal {...defaultReactModalProps}> 
           <ReviewDetailsCard {...reviewDetailsProps} />
       </ReactModal>
     );

@@ -41,7 +41,7 @@ export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
     date: !isNil(comment) ? comment.date :  moment().format('dddd, MMMM DD, h:mm a z').toString(),
   });
   const [showCommentForm, setShowCommentForm] = React.useState<boolean>(false);
-  const [reviewHasComment, setReviewHasComment] = React.useState<boolean>(!isNil(comment));
+  const [reviewHasComment, setReviewHasComment] = React.useState<boolean>(!isEmpty(comment.description));
   
   async function updateReviewComment(
     username: string, 
@@ -52,7 +52,7 @@ export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
   }
 
   const commentCTA = (username: string, description: string, isEditing: boolean) => {
-    if (showCommentForm) {
+    if (showCommentForm && !isEmpty(username)) {
       setReviewHasComment(true);
       updateReviewComment(username, description);
     }
@@ -84,12 +84,13 @@ export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
   })
 
   return (
-    <div className={reviewDetailsContainerClasses}>
+    <div className={reviewDetailsContainerClasses} data-testid='review-details-card'>
         <ReviewCard {...reviewCardProps} />
         {!reviewHasComment && showCommentForm ? <CommentForm {...commentFormProps} /> : null}
         {!reviewHasComment && !showCommentForm ? (
           <button
             className='submit-comment-button'
+            data-testid='submit-comment-button'
             onClick={() => commentCTA('', '', true)}
             disabled={showCommentForm && (isEmpty(reviewResponse.username) || isEmpty(reviewResponse.description))}
           >

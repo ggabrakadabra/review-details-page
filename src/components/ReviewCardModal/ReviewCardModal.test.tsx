@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import ReviewCardModal, { ReviewCardModalProps } from './ReviewCardModal';
 
 const setup = () => {
@@ -19,17 +19,28 @@ const setup = () => {
 
   const utils = render(<ReviewCardModal {...defaultProps} />);
 
-  const reviewCardContainer = utils.getByTestId('review-card-container') as HTMLInputElement;
+  const reviewCardContainer = utils.getByTestId('review-card-container') as HTMLElement;
+  const reviewCard = utils.queryByTestId('review-card') as HTMLElement;
 
   return {
     reviewCardContainer,
+    reviewCard,
     ...utils,
   };
 };
 
 describe('ReviewCardModal', () => {
   it('renders review information', () => {
-    const {reviewCardContainer } = setup();
+    const { reviewCardContainer } = setup();
     expect(reviewCardContainer).toBeInTheDocument();
+  });
+
+  it('will show detail view', () => {
+    const { reviewCardContainer, reviewCard } = setup();
+    expect(reviewCard).toBeInTheDocument();
+
+    fireEvent.click(reviewCardContainer);
+
+    expect(reviewCard).not.toBeInTheDocument();
   });
 });

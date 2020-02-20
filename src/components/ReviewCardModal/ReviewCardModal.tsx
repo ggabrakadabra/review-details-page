@@ -3,6 +3,7 @@ import ReviewDetailsCard, { ReviewDetailsCardProps, CommentProps } from '../Revi
 import ReactModal from 'react-modal';
 import './ReviewCardModal.scss'
 import ReviewCard from '../ReviewCard/ReviewCard';
+import { getSingleReview } from '../../api/fetch';
 
 export interface ReviewCardModalProps {
   id: string;
@@ -16,32 +17,24 @@ export interface ReviewCardModalProps {
 
 export default function ReviewCardModal(props: ReviewCardModalProps) {
   const [showDetailsView, setShowDetailsView] = React.useState<boolean>(false);
+  const [reviewProps, setReviewProps] = React.useState(props);
+  const [didUpdate, setDidUpdate] = React.useState(false);
 
-  const {
-    author, 
-    place,
-    publishedAt,
-    rating,
-    content,
-    id,
-    comment
-  } = props; 
+  const reviewDetailsProps: ReviewDetailsCardProps = {...reviewProps, setDidUpdate}
 
-  const reviewDetailsProps: ReviewDetailsCardProps = {
-    author, 
-    place,
-    publishedAt,
-    rating,
-    content,
-    comment,
-    id
+  const onRequestClose = async () => {
+    if (didUpdate) {
+      const updatedReview = await getSingleReview(props.id);
+      setReviewProps(updatedReview);
+    }
+    setShowDetailsView(!showDetailsView);
   }
 
   const defaultReactModalProps = {
     isOpen: true,
     shouldCloseOnOverlayClick: true,
     shouldCloseOnEsc: true,
-    onRequestClose: () => setShowDetailsView(!showDetailsView),
+    onRequestClose,
     className: 'modal',
     overlayClassName: 'modal-overlay',
     ariaHideApp: false
@@ -63,7 +56,7 @@ export default function ReviewCardModal(props: ReviewCardModalProps) {
         role='button'
         onClick={() => setShowDetailsView(!showDetailsView)}
       >
-        <ReviewCard key={id} {...props}/>
+        <ReviewCard key={props.id} {...reviewProps}/>
       </div>
     )
   }

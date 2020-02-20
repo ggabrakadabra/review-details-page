@@ -33,7 +33,8 @@ describe('ReviewCommentCard', () => {
         username: '',
         description: '',
         date: '',
-      }
+      },
+      setDidUpdate: jest.fn()
     }
     const { reviewCommentCard, reviewCard, commentButton, descriptionInput, usernameInput } = setup(defaultProps);
     expect(reviewCard).toBeInTheDocument();

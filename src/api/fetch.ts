@@ -12,6 +12,16 @@ export async function getReviews() {
   return await response.json();
 }
 
+export async function getSingleReview(id: string) {
+  const response = await fetch(`http://localhost:3004/reviews/${id}`, {
+    headers : { 
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    }
+  });
+  return await response.json();
+}
+
 export async function addOrEditComment(
   username: string, 
   description: string, 

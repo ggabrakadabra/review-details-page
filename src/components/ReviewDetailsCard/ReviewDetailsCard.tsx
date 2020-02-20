@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ReviewCommentCard, { ReviewCommentCardProps } from '../ReviewCommentCard/ReviewCommentCard';
 import moment from 'moment';
-import { isNil, isEmpty } from 'lodash';
+import { isNil, isEmpty, get } from 'lodash';
 import './ReviewDetailsCard.scss';
 import CommentForm, { CommentFormProps } from '../CommentForm/CommentForm';
 import ReviewCard, { ReviewCardProps } from '../ReviewCard/ReviewCard';
@@ -21,7 +21,8 @@ export interface ReviewDetailsCardProps {
   publishedAt: string;
   rating: number;
   content: string;
-  comment: CommentProps
+  comment: CommentProps;
+  setDidUpdate: (didUpdate: boolean) => void;
 }
 
 export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
@@ -32,7 +33,7 @@ export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
     rating,
     content,
     comment,
-    id
+    setDidUpdate
   } = props; 
 
   const [reviewResponse, setReviewResponse] = React.useState<CommentProps>({
@@ -41,8 +42,8 @@ export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
     date: !isNil(comment) ? comment.date :  moment().format('dddd, MMMM DD, h:mm a z').toString(),
   });
   const [showCommentForm, setShowCommentForm] = React.useState<boolean>(false);
-  const [reviewHasComment, setReviewHasComment] = React.useState<boolean>(!isEmpty(comment.description));
-  
+  const [reviewHasComment, setReviewHasComment] = React.useState<boolean>(!isEmpty(get(comment, 'description', '')));
+
   async function updateReviewComment(
     username: string, 
     description: string
@@ -54,6 +55,7 @@ export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
   const commentCTA = (username: string, description: string, isEditing: boolean) => {
     if (showCommentForm && !isEmpty(username)) {
       setReviewHasComment(true);
+      setDidUpdate(true)
       updateReviewComment(username, description);
     }
     setShowCommentForm(isEditing);
@@ -76,7 +78,7 @@ export default function ReviewDetailsCard(props: ReviewDetailsCardProps) {
 
   const reviewCommentCardProps: ReviewCommentCardProps = {
     ...reviewResponse, 
-    editComment: (username: string, description: string) => updateReviewComment(username,description)
+    editComment: (username: string, description: string) => updateReviewComment(username, description)
   }
 
   const reviewDetailsContainerClasses = classnames('review-details-container', {
